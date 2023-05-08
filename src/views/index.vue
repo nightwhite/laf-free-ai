@@ -17,7 +17,6 @@ const wait = ref(false);
 const isMobile = ref(false);
 
 async function send() {
-  console.log(loading.value);
   if (loading.value) return;
   if (wait.value) return;
   list.value.push({
@@ -39,7 +38,7 @@ async function send() {
     return;
   }
   try {
-    const obj = { message };
+    const obj = { question: message };
     if (parentMessageId.value) obj.parentMessageId = parentMessageId.value;
     console.log(obj);
     
@@ -62,6 +61,8 @@ async function send() {
         );
       },
     });
+
+    
     axios({
       url: `${baseUrl}/send`,
       method: "post",
@@ -77,14 +78,17 @@ async function send() {
           first = false
         }
         const text = progressEvent.event.currentTarget.responseText;
-        console.log(text);
         loading.value = false;
-        if (text.includes("chatcmpl")) {
-          const parts = text.split("chatcmpl-");
-          parentMessageId.value = "chatcmpl-" + parts[1]
-        } else {
-          list.value[list.value.length - 1].text = md.render(text)
+        const res = JSON.parse(text);
+        if (res.code !== 0) {
+          list.value.push({
+            text: res.msg,
+            avatar: "/log.png",
+          });
+          setScreen();
+          return;
         }
+        list.value[list.value.length - 1].text = md.render(res.msg)
         setScreen();
       },
     }).then(() => {
@@ -108,7 +112,7 @@ async function send() {
 }
 
 
-//发送消息适配PC或phone
+//发送消息适配 PC 或 phone
 function handleEnter(e) {
   if (e.key === "Enter" && !isMobile.value && !e.shiftKey) {
     send();
@@ -125,7 +129,7 @@ function setScreen() {
 <template>
   <div class="page">
     <div class="begintitle">
-      <h1 v-show="!list.length" @click="send">左风的ChatGPT</h1>
+      <h1 v-show="!list.length" @click="send">基于 Laf 开发的 AI 应用</h1>
     </div>
 
     <div id="myList">
@@ -166,8 +170,8 @@ function setScreen() {
         </svg>
         <h3 class="title">实例</h3>
         <p>"用简单的术语解释量子计算"</p>
-        <p>"10岁的生日有什么创意吗？"</p>
-        <p>"如何在Javascript中提出HTTP请求？"</p>
+        <p>"10 岁的生日有什么创意吗？"</p>
+        <p>"如何在 Javascript 中提出 HTTP 请求？"</p>
       </div>
 
       <div class="witem">
@@ -214,7 +218,7 @@ function setScreen() {
         <h3 class="title">限制</h3>
         <p>偶尔可能会生成错误的信息</p>
         <p>偶尔可能会产生有害的指令或有偏见的内容</p>
-        <p>对2021年后的世界和事件的了解有限</p>
+        <p>对 2021 年后的世界和事件的了解有限</p>
       </div>
     </div>
     <div class="steppingstone"></div>

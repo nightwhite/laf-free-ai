@@ -1,5 +1,5 @@
 {
-  "name": "chatgpt",
+  "name": "laf-free-ai",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -25,17 +25,9 @@
     "tailwindcss": "^3.2.7",
     "vite": "^4.1.4"
   },
-  "description": "基于 laf 开发的 chatGPT 聊天工具",
+  "description": "基于 Laf 开发的 AI 应用",
   "main": "vite.config.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zuoFeng59556/chatGPT.git"
-  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zuoFeng59556/chatGPT/issues"
-  },
-  "homepage": "https://github.com/zuoFeng59556/chatGPT#readme"
+  "license": "ISC"
 }
