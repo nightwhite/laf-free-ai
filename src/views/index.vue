@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import axios from 'axios'
+import axios from "axios";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
-import { getCurrentInstance } from 'vue';
-const { proxy } =getCurrentInstance();
+import { getCurrentInstance } from "vue";
+const { proxy } = getCurrentInstance();
 const cloud = proxy.$cloud;
 const baseUrl = proxy.$baseUrl;
 
@@ -41,8 +41,8 @@ async function send() {
     const obj = { question: message };
     if (parentMessageId.value) obj.parentMessageId = parentMessageId.value;
     console.log(obj);
-    
-    let first = true ;
+
+    let first = true;
     const md = new MarkdownIt({
       highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
@@ -62,7 +62,6 @@ async function send() {
       },
     });
 
-    
     axios({
       url: `${baseUrl}/send`,
       method: "post",
@@ -75,7 +74,7 @@ async function send() {
             text: "",
             avatar: "/log.png",
           });
-          first = false
+          first = false;
         }
         const text = progressEvent.event.currentTarget.responseText;
         loading.value = false;
@@ -88,17 +87,19 @@ async function send() {
           setScreen();
           return;
         }
-        list.value[list.value.length - 1].text = md.render(res.msg)
+        list.value[list.value.length - 1].text = md.render(res.msg);
         setScreen();
       },
-    }).then(() => {
-      loading.value = false;
-      wait.value = false;
-    }).catch((e) => {
-      console.log(e);
-      loading.value = false;
-      wait.value = false;
-    });
+    })
+      .then(() => {
+        loading.value = false;
+        wait.value = false;
+      })
+      .catch((e) => {
+        console.log(e);
+        loading.value = false;
+        wait.value = false;
+      });
   } catch (error) {
     console.log(error);
     loading.value = false;
@@ -110,7 +111,6 @@ async function send() {
     return;
   }
 }
-
 
 //发送消息适配 PC 或 phone
 function handleEnter(e) {
@@ -224,7 +224,6 @@ function setScreen() {
     <div class="steppingstone"></div>
 
     <div class="inputbox">
-
       <el-input
         v-bind:readonly="loading"
         @keypress="handleEnter"
@@ -280,6 +279,7 @@ function setScreen() {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 5px;
   width: 48px;
   height: 32px;
   border-radius: 6px;
@@ -347,7 +347,6 @@ function setScreen() {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.3);
   padding-right: 12px;
   background: #fff;
   border-radius: 8px;
