@@ -2,9 +2,9 @@
 
 ## 1、注册 Laf 账号
 
-注册地址：https://laf.run
+注册地址：<https://laf.run>
 
-输入手机号即可注册成功 
+输入手机号即可注册成功
 
 ## 2、新建 Laf 应用
 
@@ -22,7 +22,7 @@
 
 ![image](https://user-images.githubusercontent.com/22722256/236950136-f78ab31a-53e3-430c-bd77-81eb6a28f448.png)
 
-点击链接可复制云函数Url
+点击链接可复制云函数 Url
 
 ## 4、创建存储桶
 

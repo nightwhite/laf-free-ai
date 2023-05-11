@@ -81,12 +81,21 @@ async function send() {
         loading.value = false;
         const res = JSON.parse(text);
         if (res.code !== 0) {
+          
           list.value.push({
             text: res.msg,
             avatar: "/log.png",
           });
+          if(res.parentsId){
+            parentMessageId.value = res.parentsId;
+          }
           setScreen();
           return;
+        }
+        if(res.code == 0){
+          if(res.parentsId){
+            parentMessageId.value = res.parentsId;
+          }
         }
         list.value[list.value.length - 1].text = md.render(res.msg)
         setScreen();
@@ -299,6 +308,8 @@ function setScreen() {
   width: 90%;
 }
 
+
+
 #myList {
   max-width: 1000px;
   margin: 0 auto;
@@ -436,6 +447,7 @@ textarea {
   outline: none;
   overflow-y: hidden;
 }
+
 
 @media screen and (max-width: 600px) {
   .text {
